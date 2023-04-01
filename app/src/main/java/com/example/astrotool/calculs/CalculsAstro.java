@@ -49,8 +49,7 @@ public class CalculsAstro {
         double T = (JDT-2451545)/36525;
         double mean_obliquity = 23.43929111111-0.01300416667*T-0.00000016389*T*T+0.00000050361*T*T*T;
         double nutation_e = nutation[1]/(60*60);
-        double true_obliquity = mean_obliquity+nutation_e;
-        return true_obliquity;
+        return mean_obliquity+nutation_e;
     }
 
     public static double getTrueGHAAries(double JDT){
@@ -58,9 +57,20 @@ public class CalculsAstro {
         double nutation_L = getNutation(JDT)[0];
         double mean_gha = getMeanGHAAries(JDT);
         double true_gha_second =nutation_L*Math.cos(true_obliquity*(Math.PI/180));
-        double true_gha = mean_gha + (true_gha_second/(60*60));
-        return true_gha;
+        return mean_gha + (true_gha_second/(60*60));
 
+    }
+
+    public static double getLST (double G, double ApparentSideralTime){
+        double LST;
+        return LST = ApparentSideralTime - G;
+
+    }
+
+    public static double getAH (double JDT){
+        double trueAries = getTrueGHAAries(JDT);
+
+    return 0;
     }
 
 }

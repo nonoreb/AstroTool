@@ -2,6 +2,7 @@ package com.example.astrotool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.astrotool.calculs.CalculsAstro;
+import com.example.astrotool.calculs.MathsFunctions;
 
 import java.text.DecimalFormat;
 
@@ -26,6 +28,7 @@ public class Test extends AppCompatActivity {
         EditText second = findViewById(R.id.editTextTime6);
         Button valider = findViewById(R.id.button2);
         valider.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 int MM = Integer.parseInt(month.getText().toString());
@@ -45,21 +48,16 @@ public class Test extends AppCompatActivity {
                     String df = "Jour julien : " + DJT_aff;
                     res.setText(df);
                     double gha2 = CalculsAstro.getMeanGHAAries(JDT);
-                    int d_int = (int)Math.abs(gha2);
-                    double m = (gha2-d_int)*60;
-                    int m_int = (int)m;
-                    double s = (m-m_int)*60;
-                    DecimalFormat decimalFormat = new DecimalFormat("00.0");
-                    String s_int = decimalFormat.format(s);
-                    GHA2.setText("AHso moyen : " +d_int+ "°"+ m_int + "'"+ s_int+ "''");
+                    String angle2 = MathsFunctions.formatAngle(gha2);
+                    GHA2.setText("AHSo Moyen : "+ angle2);
                     double true_obliquity = CalculsAstro.getTrueGHAAries(JDT);
-                    int d_int2 = (int)true_obliquity;
-                    double m2 = (true_obliquity-d_int2)*60;
-                    int m_int2 = (int)m2;
-                    double s2 = (m2-m_int2)*60;
-                    String s_int2 = decimalFormat.format(s2);
-                    obl.setText("AHso vrai : "+d_int2+"°"+m_int2+"'"+s_int2+"''");
-                    //obl.setText(String.valueOf(true_obliquity));
+                    String angle = MathsFunctions.formatAngle(true_obliquity);
+                    obl.setText("AHSo Vrai : " + angle);
+                    double LST =  CalculsAstro.getLST(-2, true_obliquity);
+                    LST = MathsFunctions.getHourFromAngle(LST);
+                    TextView localSideralTime = findViewById(R.id.textView4);
+                    localSideralTime.setText(MathsFunctions.formatHour(LST));
+
 
 
 
