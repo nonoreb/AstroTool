@@ -26,6 +26,8 @@ public class Test extends AppCompatActivity {
         EditText hour = findViewById(R.id.editTextTime4);
         EditText minut = findViewById(R.id.editTextTime5);
         EditText second = findViewById(R.id.editTextTime6);
+        EditText longitude = findViewById(R.id.editTextNumberDecimal1);
+        EditText RA = findViewById(R.id.editTextNumberDecimal2);
         Button valider = findViewById(R.id.button2);
         valider.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
@@ -37,6 +39,9 @@ public class Test extends AppCompatActivity {
                 double hh = Integer.parseInt(hour.getText().toString());
                 double mm = Integer.parseInt(minut.getText().toString());
                 double ss = Integer.parseInt(second.getText().toString());
+                double longit = Double.parseDouble(longitude.getText().toString());
+                double ra = Double.parseDouble(RA.getText().toString());
+
                 if (1900 < YYYY && YYYY < 2100 ) {
 
                     double JDT = CalculsAstro.getJD(YYYY, MM, DD, hh, mm, ss);
@@ -48,15 +53,25 @@ public class Test extends AppCompatActivity {
                     String df = "Jour julien : " + DJT_aff;
                     res.setText(df);
                     double gha2 = CalculsAstro.getMeanGHAAries(JDT);
-                    String angle2 = MathsFunctions.formatAngle(gha2);
+                    double angl1 = MathsFunctions.getHourFromAngle(gha2);
+                    String angle2 = MathsFunctions.formatHour(angl1);
                     GHA2.setText("AHSo Moyen : "+ angle2);
                     double true_obliquity = CalculsAstro.getTrueGHAAries(JDT);
-                    String angle = MathsFunctions.formatAngle(true_obliquity);
-                    obl.setText("AHSo Vrai : " + angle);
-                    double LST =  CalculsAstro.getLST(-2, true_obliquity);
-                    LST = MathsFunctions.getHourFromAngle(LST);
+
+                    //double anglE = MathsFunctions.getHourFromAngle(true_obliquity);
+                    String angl = MathsFunctions.formatAngle(true_obliquity);
+                    obl.setText("AHSo Vrai : " + angl);
+                    double LST =  CalculsAstro.getLST(longit, true_obliquity);
+                    double RA = MathsFunctions.getAngleFromHour(ra);
+                    double LHA = CalculsAstro.getLHA(LST, RA);
+                    //LST = MathsFunctions.getHourFromAngle(LST);
+                    //LHA = MathsFunctions.getHourFromAngle(LHA);
                     TextView localSideralTime = findViewById(R.id.textView4);
-                    localSideralTime.setText(MathsFunctions.formatHour(LST));
+                    TextView localHourAngle = findViewById(R.id.textView5);
+                    String lst = MathsFunctions.formatAngle(LST);
+                    localSideralTime.setText("LST : "+ lst);
+                    String lha = MathsFunctions.formatAngle(LHA);
+                    localHourAngle.setText("LHA : "+ lha);
 
 
 

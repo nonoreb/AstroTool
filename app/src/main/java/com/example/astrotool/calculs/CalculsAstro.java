@@ -67,10 +67,9 @@ public class CalculsAstro {
 
     }
 
-    public static double getAH (double JDT){
-        double trueAries = getTrueGHAAries(JDT);
-
-    return 0;
+    public static double getLHA (double LST, double RA){
+        double LHA = 0;
+        return LHA = LST - RA;
     }
 
 }

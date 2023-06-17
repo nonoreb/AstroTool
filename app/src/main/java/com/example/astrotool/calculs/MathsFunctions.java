@@ -7,7 +7,11 @@ public class MathsFunctions {
     public static double getHourFromAngle (double angle){
         double hourAngle =0;
         return hourAngle = (angle*24)/360;
+    }
 
+    public static double getAngleFromHour (double hour){
+        double angle = 0;
+        return angle = (hour*360)/24;
     }
 
     public static String formatAngle (double angle){
